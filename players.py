@@ -81,8 +81,9 @@ class Goalkeeper(Player):
         self.dribbling = 10
  
 class Team():
-    def __init__(self):
+    def __init__(self, name):
         self.players = self.generate_players()
+        self.name = name;
 
     def __str__(self):
         team = []
