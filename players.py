@@ -1,3 +1,4 @@
+from statistics import mean
 import pandas as pd
 import random as rd
 
@@ -8,6 +9,7 @@ SECONDARY_MAX = 70
 TERTIARY_MIN = 10
 TERTIARY_MAX = 50
 
+
 class Player:
     def __init__(self, first_name, last_name, height, weight, age):
         self.first_name = first_name
@@ -17,27 +19,46 @@ class Player:
         self.age = age
 
         self.set_stats()
+        self.set_rating()
+
 
     def __str__(self):
         return f'{self.last_name}, {self.first_name}'
+
 
     def set_stats(self):
         self.physical = rd.randint(20, 80)
         self.mental = rd.randint(20, 80)
         self.goalkeeping = 10
 
+
     def generate_primary(self):
         return rd.randint(PRIMARY_MIN, PRIMARY_MAX)
     
+
     def generate_secondary(self):
         return rd.randint(SECONDARY_MIN, SECONDARY_MAX)
+
     
     def generate_tertiary(self):
         return rd.randint(TERTIARY_MIN, TERTIARY_MAX)
 
+
+    def set_rating(self):
+        self.rating = int(mean([
+            self.physical,
+            self.mental,
+            self.defending,
+            self.passing,
+            self.dribbling,
+            self.shooting
+            ]))
+
+
 class Attacker(Player):
     def __init__(self, first_name, last_name, height, weight, age):
         Player.__init__(self, first_name, last_name, height, weight, age)
+
 
     def set_stats(self):
         Player.set_stats(self)
@@ -46,9 +67,11 @@ class Attacker(Player):
         self.dribbling = self.generate_secondary()
         self.shooting = self.generate_primary()
 
+
 class Midfielder(Player):
     def __init__(self, first_name, last_name, height, weight, age):
         Player.__init__(self, first_name, last_name, height, weight, age)
+
 
     def set_stats(self):
         Player.set_stats(self)
@@ -57,9 +80,11 @@ class Midfielder(Player):
         self.dribbling = self.generate_secondary()
         self.shooting = self.generate_secondary()
 
+
 class Defender(Player):
     def __init__(self, first_name, last_name, height, weight, age):
         Player.__init__(self, first_name, last_name, height, weight, age)
+
 
     def set_stats(self):
         Player.set_stats(self)
@@ -68,9 +93,11 @@ class Defender(Player):
         self.dribbling = self.generate_tertiary()
         self.shooting = self.generate_tertiary()
 
+
 class Goalkeeper(Player):
     def __init__(self, first_name, last_name, height, weight, age):
         Player.__init__(self, first_name, last_name, height, weight, age)
+
 
     def set_stats(self):
         Player.set_stats(self)
@@ -79,11 +106,20 @@ class Goalkeeper(Player):
         self.passing = self.generate_tertiary()
         self.shooting = 10
         self.dribbling = 10
+
+    def set_rating(self):
+        self.rating = int(mean([
+            self.physical,
+            self.mental,
+            self.goalkeeping
+            ]))
  
+
 class Team():
     def __init__(self, name):
         self.players = self.generate_players()
         self.name = name;
+
 
     def __str__(self):
         team = []
@@ -91,6 +127,7 @@ class Team():
         for player in self.players:
             team.append([
                 player.last_name,
+                player.rating,
                 player.physical,
                 player.mental,
                 player.defending,
@@ -100,8 +137,9 @@ class Team():
                 player.goalkeeping
                 ])
 
-        teamsheet = pd.DataFrame(team, index=range(1, (len(team)+1)), columns=['Name', 'PHY', 'MEN', 'DEF', 'PAS', 'DRI', 'SHO', 'GK'])
+        teamsheet = pd.DataFrame(team, index=range(1, (len(team)+1)), columns=['Name', 'Rating', 'PHY', 'MEN', 'DEF', 'PAS', 'DRI', 'SHO', 'GK'])
         return str(teamsheet)
+
 
     def generate_players(self):
         players = []

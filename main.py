@@ -28,6 +28,6 @@ if core.check_input('Would you like to play a game with this team (y/n)? '):
     print('Result: ' + str(next_match))
 elif core.check_input('Would you like to generate a new team (y/n)? '):
     print('Signing new players...')
-    player_team = pl.Team()
+    player_team = pl.Team('Arsenal FC')
 else:
     core.exit_message() 
