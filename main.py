@@ -1,7 +1,7 @@
 import sys
-import players as pl
-import matches
-import core
+from modules import players as pl
+from modules import matches
+from modules import core
 
 print('Welcome to football manager!')
 
