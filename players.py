@@ -1,13 +1,17 @@
 from statistics import mean
+from math import ceil
 import pandas as pd
 import random as rd
 
 PRIMARY_MIN = 50
 PRIMARY_MAX = 90
+PRIMARY_WEIGHT = 1.0
 SECONDARY_MIN = 30
 SECONDARY_MAX = 70
+SECONDARY_WEIGHT = 1.3
 TERTIARY_MIN = 10
 TERTIARY_MAX = 50
+TERTIARY_WEIGHT = 1.8
 
 
 class Player:
@@ -43,16 +47,14 @@ class Player:
     def generate_tertiary(self):
         return rd.randint(TERTIARY_MIN, TERTIARY_MAX)
 
+    def format_rating(self):
+        stars = ''
+        norm_rating = ceil(self.rating/20)
 
-    def set_rating(self):
-        self.rating = int(mean([
-            self.physical,
-            self.mental,
-            self.defending,
-            self.passing,
-            self.dribbling,
-            self.shooting
-            ]))
+        for i in range(0, norm_rating):
+            stars = stars + '*'
+
+        return stars
 
 
 class Attacker(Player):
@@ -66,6 +68,17 @@ class Attacker(Player):
         self.passing = self.generate_tertiary()
         self.dribbling = self.generate_secondary()
         self.shooting = self.generate_primary()
+     
+
+    def set_rating(self):
+        self.rating = int(mean([
+            PRIMARY_WEIGHT * self.physical,
+            PRIMARY_WEIGHT * self.mental,
+            TERTIARY_WEIGHT * self.defending,
+            TERTIARY_WEIGHT * self.passing,
+            SECONDARY_WEIGHT * self.dribbling,
+            PRIMARY_WEIGHT * self.shooting
+            ]))
 
 
 class Midfielder(Player):
@@ -81,6 +94,17 @@ class Midfielder(Player):
         self.shooting = self.generate_secondary()
 
 
+    def set_rating(self):
+       self.rating = int(mean([
+           PRIMARY_WEIGHT * self.physical,
+           PRIMARY_WEIGHT * self.mental,
+           TERTIARY_WEIGHT * self.defending,
+           SECONDARY_WEIGHT * self.passing,
+           SECONDARY_WEIGHT * self.dribbling,
+           SECONDARY_WEIGHT * self.shooting
+           ]))
+
+
 class Defender(Player):
     def __init__(self, first_name, last_name, height, weight, age):
         Player.__init__(self, first_name, last_name, height, weight, age)
@@ -92,6 +116,17 @@ class Defender(Player):
         self.passing = self.generate_secondary()
         self.dribbling = self.generate_tertiary()
         self.shooting = self.generate_tertiary()
+    
+    
+    def set_rating(self):
+        self.rating = int(mean([
+            PRIMARY_WEIGHT * self.physical,
+            PRIMARY_WEIGHT * self.mental,
+            PRIMARY_WEIGHT * self.defending,
+            SECONDARY_WEIGHT * self.passing,
+            TERTIARY_WEIGHT * self.dribbling,
+            TERTIARY_WEIGHT * self.shooting
+            ]))
 
 
 class Goalkeeper(Player):
@@ -120,6 +155,8 @@ class Team():
         self.players = self.generate_players()
         self.name = name;
 
+        self.set_rating()
+
 
     def __str__(self):
         team = []
@@ -127,7 +164,7 @@ class Team():
         for player in self.players:
             team.append([
                 player.last_name,
-                player.rating,
+                player.format_rating(),
                 player.physical,
                 player.mental,
                 player.defending,
@@ -138,7 +175,7 @@ class Team():
                 ])
 
         teamsheet = pd.DataFrame(team, index=range(1, (len(team)+1)), columns=['Name', 'Rating', 'PHY', 'MEN', 'DEF', 'PAS', 'DRI', 'SHO', 'GK'])
-        return str(teamsheet)
+        return self.name + ' (' + str(self.rating) + ')\n' + str(teamsheet)
 
 
     def generate_players(self):
@@ -156,4 +193,12 @@ class Team():
                 print('Player out of bounds')
                 break
         return players
+
+
+    def set_rating(self):
+        player_ratings = []
+        for player in self.players:
+            player_ratings.append(player.rating)
+
+        self.rating = int(mean(player_ratings))
 
