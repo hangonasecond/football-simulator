@@ -1,5 +1,6 @@
 from statistics import mean
 from math import ceil
+from modules.names import player_name
 import pandas as pd
 import random as rd
 
@@ -181,14 +182,15 @@ class Team():
     def generate_players(self):
         players = []
         for i in range(11):
+            names = player_name()
             if i == 0:
-                players.append(Goalkeeper('Iker', 'Casillas', 200, 90, 32))
+                players.append(Goalkeeper(names[0], names[1], 200, 90, 32))
             elif i in range(1, 5):
-                players.append(Defender('Mr.', 'Defender', 190, 100, 29))
+                players.append(Defender(names[0], names[1], 190, 100, 29))
             elif i in range(5, 9):
-                players.append(Midfielder('Mr.', 'Midfielder', 180, 80, 26))
+                players.append(Midfielder(names[0], names[1], 180, 80, 26))
             elif i in range(9, 11):
-                players.append(Attacker('Messi', 'Ronaldo', 150, 100, 22))
+                players.append(Attacker(names[0], names[1], 150, 100, 22))
             else:
                 print('Player out of bounds')
                 break
