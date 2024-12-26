@@ -24,3 +24,8 @@ class Match:
             winner = self.away_team
 
         self.played = True
+
+    # get the differential between the team's ratings
+    # used to determine which team is more likely to win
+    def rating_diff(self):
+        return self.home_team.rating - self.away_team.rating
