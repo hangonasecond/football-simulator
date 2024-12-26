@@ -12,7 +12,7 @@ class Match:
         else:
             return f"{self.home_team.name} v. {self.away_team.name}"
 
-    def play(self):
+    def play_match(self):
         self.home_score = randint(0,5)
         self.away_score = randint(0,5)
 
