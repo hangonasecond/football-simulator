@@ -12,9 +12,30 @@ class Match:
         else:
             return f"{self.home_team.name} v. {self.away_team.name}"
 
+    # choose a random number of possible goal events
+    # each event has a chance of either team scoring (or none)
+    # based on the home team's relative strength
     def play_match(self):
-        self.home_score = randint(0,5)
-        self.away_score = randint(0,5)
+        self.home_score = 0
+        self.away_score = 0
+
+        prob_home_score = 0.5 + self.rating_diff()
+        # min and max possible goal events
+        # @TODO: adjust this so that expected number of goals is around 3-5
+        # can be achieved by adjusting goal events, or scoring probability
+        # per event
+        num_goal_events = randint(0, 10)
+
+        # P = 0.5 that no goal is scored
+        # P = 0.5 that a goal is scored, with the chance that it is scored
+        # by the home team impacted by prob_home_score
+        for i in range(0, num_goal_events):
+            if randint(0, 1) == 1:
+                continue
+            elif randint(0, 100) / 100 <= prob_home_score:
+                self.home_score += 1
+            else:
+                self.away_score += 1
 
         if self.home_score == self.away_score:
             winner = None
@@ -27,5 +48,10 @@ class Match:
 
     # get the differential between the team's ratings
     # used to determine which team is more likely to win
+    # if the home team is stronger than the away team this
+    # will be positive, and vice versa
     def rating_diff(self):
-        return self.home_team.rating - self.away_team.rating
+        abs_rating_diff = self.home_team.rating - self.away_team.rating
+        relative_rating_diff = abs_rating_diff / self.home_team.rating
+
+        return relative_rating_diff
