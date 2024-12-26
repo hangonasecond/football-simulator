@@ -24,7 +24,7 @@ if core.check_input('Would you like to play a game with this team (y/n)? '):
     next_match = matches.Match(player_team, opp_team)
     print('The match will now be played: ' + str(next_match))
 
-    next_match.play()
+    next_match.play_match()
     print('Result: ' + str(next_match))
 elif core.check_input('Would you like to generate a new team (y/n)? '):
     print('Signing new players...')
