@@ -1,5 +1,6 @@
 import sys
 from modules import players as pl
+from modules import teams
 from modules import matches
 from modules import core
 
@@ -7,7 +8,7 @@ PLAYER_TEAM = None
 
 def make_new_team():
     global PLAYER_TEAM
-    PLAYER_TEAM = pl.Team(input('Enter a team name: '))
+    PLAYER_TEAM = teams.Team(input('Enter a team name: '))
     print('The first team is: \n')
     print(PLAYER_TEAM)
 
@@ -17,7 +18,7 @@ def play_new_team():
     print('Great, let\'s play!')
     print('Creating opposition...')
 
-    opp_team = pl.Team('Manchester City')
+    opp_team = teams.Team('Manchester City')
 
     print('Your opposition is: \n')
     print(opp_team)
