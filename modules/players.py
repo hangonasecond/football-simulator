@@ -61,6 +61,7 @@ class Player:
 class Attacker(Player):
     def __init__(self, first_name, last_name, height, weight, age):
         Player.__init__(self, first_name, last_name, height, weight, age)
+        self.position = 'ATT'
 
 
     def set_stats(self):
@@ -85,6 +86,7 @@ class Attacker(Player):
 class Midfielder(Player):
     def __init__(self, first_name, last_name, height, weight, age):
         Player.__init__(self, first_name, last_name, height, weight, age)
+        self.position = 'MID'
 
 
     def set_stats(self):
@@ -109,6 +111,7 @@ class Midfielder(Player):
 class Defender(Player):
     def __init__(self, first_name, last_name, height, weight, age):
         Player.__init__(self, first_name, last_name, height, weight, age)
+        self.position = 'DEF'
 
 
     def set_stats(self):
@@ -133,6 +136,7 @@ class Defender(Player):
 class Goalkeeper(Player):
     def __init__(self, first_name, last_name, height, weight, age):
         Player.__init__(self, first_name, last_name, height, weight, age)
+        self.position = 'GK'
 
 
     def set_stats(self):
@@ -164,6 +168,7 @@ class Team():
 
         for player in self.players:
             team.append([
+                player.position,
                 player.last_name,
                 player.format_rating(),
                 player.physical,
@@ -175,7 +180,7 @@ class Team():
                 player.goalkeeping
                 ])
 
-        teamsheet = pd.DataFrame(team, index=range(1, (len(team)+1)), columns=['Name', 'Rating', 'PHY', 'MEN', 'DEF', 'PAS', 'DRI', 'SHO', 'GK'])
+        teamsheet = pd.DataFrame(team, index=range(1, (len(team)+1)), columns=['Position', 'Name', 'Rating', 'PHY', 'MEN', 'DEF', 'PAS', 'DRI', 'SHO', 'GK'])
         return self.name + ' (' + str(self.rating) + ')\n' + str(teamsheet)
 
 
