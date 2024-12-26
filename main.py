@@ -35,12 +35,11 @@ if core.check_input('Would you like to create a new team (y/n)? '):
     make_new_team()
 else:
     core.exit_message()
-
-if core.check_input('Would you like to play a game with this team (y/n)? '):
-    play_new_team()
-elif core.check_input('Would you like to generate a new team (y/n)? '):
-    print('Signing new players...')
-    make_new_team()
-    play_new_team()
-else:
-    core.exit_message() 
+while True:
+    if core.check_input('Would you like to play a game with this team (y/n)? '):
+        play_new_team()
+    elif core.check_input('Would you like to generate a new team (y/n)? '):
+        print('Signing new players...')
+        make_new_team()
+    else:
+        core.exit_message() 
