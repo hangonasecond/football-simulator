@@ -3,16 +3,17 @@ from modules import players as pl
 from modules import matches
 from modules import core
 
-print('Welcome to football manager!')
+PLAYER_TEAM = None
 
-if core.check_input('Would you like to create a new team (y/n)? '):
-    player_team = pl.Team('Arsenal FC')
+def make_new_team():
+    global PLAYER_TEAM
+    PLAYER_TEAM = pl.Team(input('Enter a team name: '))
     print('The first team is: \n')
-    print(player_team)
-else:
-    core.exit_message()
+    print(PLAYER_TEAM)
 
-if core.check_input('Would you like to play a game with this team (y/n)? '):
+
+def play_new_team():
+    global PLAYER_TEAM
     print('Great, let\'s play!')
     print('Creating opposition...')
 
@@ -21,13 +22,24 @@ if core.check_input('Would you like to play a game with this team (y/n)? '):
     print('Your opposition is: \n')
     print(opp_team)
 
-    next_match = matches.Match(player_team, opp_team)
+    next_match = matches.Match(PLAYER_TEAM, opp_team)
     print('The match will now be played: ' + str(next_match))
 
     next_match.play_match()
     print('Result: ' + str(next_match))
-elif core.check_input('Would you like to generate a new team (y/n)? '):
-    print('Signing new players...')
-    player_team = pl.Team('Arsenal FC')
+   
+
+print('Welcome to football manager!')
+
+if core.check_input('Would you like to create a new team (y/n)? '):
+    make_new_team()
 else:
-    core.exit_message() 
+    core.exit_message()
+while True:
+    if core.check_input('Would you like to play a game with this team (y/n)? '):
+        play_new_team()
+    elif core.check_input('Would you like to generate a new team (y/n)? '):
+        print('Signing new players...')
+        make_new_team()
+    else:
+        core.exit_message() 
