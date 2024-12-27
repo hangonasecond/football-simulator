@@ -1,5 +1,6 @@
 import sys
 from modules import players as pl
+from modules import teams
 from modules import matches
 from modules import core
 
@@ -7,9 +8,33 @@ PLAYER_TEAM = None
 
 def make_new_team():
     global PLAYER_TEAM
-    PLAYER_TEAM = pl.Team(input('Enter a team name: '))
+    PLAYER_TEAM = teams.Team(input('Enter a team name: '), player_formation_input())
     print('The first team is: \n')
     print(PLAYER_TEAM)
+
+
+def player_formation_input():
+    formation = []
+    
+    while False:
+        try:
+            quant_defenders = int(input('Enter the number of defenders: '))
+            quant_midfielders = int(input('Enter the number of midfielders: '))
+            quant_attackers = int(input('Enter the number of attackers: '))
+        except TypeError:
+            print('Must be an integer.')
+            continue
+        else:
+            formation = [quant_defenders, quant_midfielders, quant_attackers]
+            player_count = 0
+            for i in formation:
+                player_count += i
+            if player_count != 10:
+                print('There should be 10 total outfield players.')
+                continue
+            else:
+                print(f"Your formation is {quant_defenders}-{quant_midfielders}-{quant_attackers}")
+                return formation
 
 
 def play_new_team():
@@ -17,7 +42,7 @@ def play_new_team():
     print('Great, let\'s play!')
     print('Creating opposition...')
 
-    opp_team = pl.Team('Manchester City')
+    opp_team = teams.Team('Manchester City', [4, 4, 2])
 
     print('Your opposition is: \n')
     print(opp_team)
