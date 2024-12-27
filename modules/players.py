@@ -1,16 +1,21 @@
 from statistics import mean
 from math import ceil
+from scipy.stats import truncnorm
 import random as rd
 
 PRIMARY_MIN = 50
 PRIMARY_MAX = 90
+PRIMARY_MEAN = 60
 PRIMARY_WEIGHT = 1.0
 SECONDARY_MIN = 30
 SECONDARY_MAX = 70
+SECONDARY_MEAN = 40
 SECONDARY_WEIGHT = 1.3
 TERTIARY_MIN = 10
 TERTIARY_MAX = 50
+TERTIARY_MEAN = 30
 TERTIARY_WEIGHT = 1.8
+STAT_SD = 20
 
 
 class Player:
@@ -30,21 +35,31 @@ class Player:
 
 
     def set_stats(self):
-        self.physical = rd.randint(20, 80)
-        self.mental = rd.randint(20, 80)
+        a_trunc = 20
+        b_trunc = 80
+        a = (a_trunc - 60) / 10
+        b = (b_trunc - 60) / 10
+        self.physical = int(truncnorm.rvs(a, b, loc = 60, scale = 20))
+        self.mental = int(truncnorm.rvs(a, b, loc = 60, scale = 20))
         self.goalkeeping = 10
 
 
     def generate_primary(self):
-        return rd.randint(PRIMARY_MIN, PRIMARY_MAX)
-    
+        a = (PRIMARY_MIN - PRIMARY_MEAN) / STAT_SD
+        b = (PRIMARY_MAX - PRIMARY_MEAN) / STAT_SD
+        return int(truncnorm.rvs(a, b, loc = PRIMARY_MEAN, scale = STAT_SD))
 
     def generate_secondary(self):
-        return rd.randint(SECONDARY_MIN, SECONDARY_MAX)
+        a = (SECONDARY_MIN - SECONDARY_MEAN) / STAT_SD
+        b = (SECONDARY_MAX - SECONDARY_MEAN) / STAT_SD
+        return int(truncnorm.rvs(a, b, loc = SECONDARY_MEAN, scale = STAT_SD))
 
     
     def generate_tertiary(self):
-        return rd.randint(TERTIARY_MIN, TERTIARY_MAX)
+        a = (TERTIARY_MIN - TERTIARY_MEAN) / STAT_SD
+        b = (TERTIARY_MAX - TERTIARY_MEAN) / STAT_SD
+        return int(truncnorm.rvs(a, b, loc = TERTIARY_MEAN, scale = STAT_SD))
+
 
     def format_rating(self):
         stars = ''
