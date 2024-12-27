@@ -8,7 +8,7 @@ PLAYER_TEAM = None
 
 def make_new_team():
     global PLAYER_TEAM
-    PLAYER_TEAM = teams.Team(input('Enter a team name: '))
+    PLAYER_TEAM = teams.Team(input('Enter a team name: '), [4, 4, 2])
     print('The first team is: \n')
     print(PLAYER_TEAM)
 
@@ -18,7 +18,7 @@ def play_new_team():
     print('Great, let\'s play!')
     print('Creating opposition...')
 
-    opp_team = teams.Team('Manchester City')
+    opp_team = teams.Team('Manchester City', [4, 4, 2])
 
     print('Your opposition is: \n')
     print(opp_team)

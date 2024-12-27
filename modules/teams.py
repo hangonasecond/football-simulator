@@ -4,8 +4,8 @@ from modules.names import player_name
 from statistics import mean
 
 class Team():
-    def __init__(self, name):
-        self.set_formation()
+    def __init__(self, name, formation):
+        self.set_formation(formation)
         self.players = self.generate_players()
         self.name = name;
 
@@ -58,5 +58,5 @@ class Team():
 
         self.rating = int(mean(player_ratings))
 
-    def set_formation(self):
-        self.formation = [4, 4, 2]
+    def set_formation(self, formation):
+        self.formation = formation
