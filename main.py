@@ -16,7 +16,7 @@ def make_new_team():
 def player_formation_input():
     formation = []
     
-    while False:
+    while True:
         try:
             quant_defenders = int(input('Enter the number of defenders: '))
             quant_midfielders = int(input('Enter the number of midfielders: '))
