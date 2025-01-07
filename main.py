@@ -3,6 +3,7 @@ from modules import players as pl
 from modules import teams
 from modules import matches
 from modules import core
+from modules import tournaments
 
 PLAYER_TEAM = None
 
@@ -52,6 +53,16 @@ def play_new_team():
 
     next_match.play_match()
     print('Result: ' + str(next_match))
+
+
+def play_tournament():
+    global PLAYER_TEAM
+    print('Great, let\'s play!')
+    print('Creating tournament...')
+
+    tournament = tournaments.Tournament(PLAYER_TEAM)
+
+    tournament.play_quarters()
    
 
 print('Welcome to football manager!')
@@ -62,7 +73,7 @@ else:
     core.exit_message()
 while True:
     if core.check_input('Would you like to play a game with this team (y/n)? '):
-        play_new_team()
+        play_tournament()
     elif core.check_input('Would you like to generate a new team (y/n)? '):
         print('Signing new players...')
         make_new_team()

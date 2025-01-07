@@ -38,11 +38,11 @@ class Match:
                 self.away_score += 1
 
         if self.home_score == self.away_score:
-            winner = None
+            self.winner = None
         elif self.home_score > self.away_score:
-            winner = self.home_team
+            self.winner = self.home_team
         else:
-            winner = self.away_team
+            self.winner = self.away_team
 
         self.played = True
 
