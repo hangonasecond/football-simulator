@@ -38,13 +38,13 @@ class Team():
         for i in range(11):
             names = player_name()
             if i == 0:
-                players.append(pl.Goalkeeper(names[0], names[1], 200, 90, 32))
+                players.append(pl.Goalkeeper(names[0], names[1]))
             elif i in range(1, 1 + self.formation[0]):
-                players.append(pl.Defender(names[0], names[1], 190, 100, 29))
+                players.append(pl.Defender(names[0], names[1]))
             elif i in range(1 + self.formation[0], 1 + self.formation[0] + self.formation[1]):
-                players.append(pl.Midfielder(names[0], names[1], 180, 80, 26))
+                players.append(pl.Midfielder(names[0], names[1]))
             elif i in range(11 - self.formation[2], 11):
-                players.append(pl.Attacker(names[0], names[1], 150, 100, 22))
+                players.append(pl.Attacker(names[0], names[1]))
             else:
                 print('Player out of bounds')
                 break

@@ -15,16 +15,13 @@ TERTIARY_MIN = 10
 TERTIARY_MAX = 50
 TERTIARY_MEAN = 30
 TERTIARY_WEIGHT = 1.8
-STAT_SD = 20
+STAT_SD = 30
 
 
 class Player:
-    def __init__(self, first_name, last_name, height, weight, age):
+    def __init__(self, first_name, last_name):
         self.first_name = first_name
         self.last_name = last_name
-        self.height = height
-        self.weight = weight
-        self.age = age
 
         self.set_stats()
         self.set_rating()
@@ -72,8 +69,8 @@ class Player:
 
 
 class Attacker(Player):
-    def __init__(self, first_name, last_name, height, weight, age):
-        Player.__init__(self, first_name, last_name, height, weight, age)
+    def __init__(self, first_name, last_name):
+        Player.__init__(self, first_name, last_name)
         self.position = 'ATT'
 
 
@@ -97,8 +94,8 @@ class Attacker(Player):
 
 
 class Midfielder(Player):
-    def __init__(self, first_name, last_name, height, weight, age):
-        Player.__init__(self, first_name, last_name, height, weight, age)
+    def __init__(self, first_name, last_name):
+        Player.__init__(self, first_name, last_name)
         self.position = 'MID'
 
 
@@ -122,8 +119,8 @@ class Midfielder(Player):
 
 
 class Defender(Player):
-    def __init__(self, first_name, last_name, height, weight, age):
-        Player.__init__(self, first_name, last_name, height, weight, age)
+    def __init__(self, first_name, last_name):
+        Player.__init__(self, first_name, last_name)
         self.position = 'DEF'
 
 
@@ -147,8 +144,8 @@ class Defender(Player):
 
 
 class Goalkeeper(Player):
-    def __init__(self, first_name, last_name, height, weight, age):
-        Player.__init__(self, first_name, last_name, height, weight, age)
+    def __init__(self, first_name, last_name):
+        Player.__init__(self, first_name, last_name)
         self.position = 'GK'
 
 
