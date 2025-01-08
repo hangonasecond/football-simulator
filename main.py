@@ -72,8 +72,26 @@ def play_tournament():
     for team in quarter_winners:
         print(team.name)
 
-    input('Press Enter to continue... \n')
-   
+    input('Press Enter to continue to the semi-finals... \n')
+
+    semi_winners = tournament.play_semis()
+    if PLAYER_TEAM in semi_winners:
+        print('Congratulations! You made it to the final!\n')
+    elif PLAYER_TEAM in quarter_winners:
+        print('You were knocked out in the semi-final. Better luck next time.\n')
+
+    print('The following teams will progress to the final: ')
+    for team in semi_winners:
+        print(team.name)
+
+    input('Press Enter to continue to the final... \n')
+
+    final_winner = tournament.play_final()
+    if PLAYER_TEAM == final_winner:
+        print('Congratulations! You won the tournament!\n')
+    elif PLAYER_TEAM in semi_winners:
+        print('Oh no! You lost the final! Better luck next time.\n')
+
 
 print('Welcome to football manager!')
 

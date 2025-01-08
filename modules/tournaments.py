@@ -47,4 +47,42 @@ class Tournament:
             
 
     def play_semis(self):
-        return True
+        semis = []
+        winners = []
+
+        for i in range (0, 2):
+            semis.append([self.quarter_winners[2*i], self.quarter_winners[2*i+1]])
+
+        for match in semis:
+            if match[0] == self.player_team:
+                print('Your opponent in the semi finals is: \n')
+                print(str(match[1]))
+
+            next_match = matches.Match(match[0], match[1])
+            print(str(next_match))
+            input('Press Enter to continue... \n')
+
+            next_match.play_match(knockout=True)
+            print('Result: ' + str(next_match))
+            winners.append(next_match.winner)
+            input('Press Enter to continue... \n')
+
+        self.semi_winners = winners
+        return self.semi_winners
+
+
+    def play_final(self):
+        teams = self.semi_winners
+        if teams[0] == self.player_team:
+            print('Your opponent in the final is: \n')
+            print(str(teams[1]))
+
+        final = matches.Match(teams[0], teams[1])
+        print(str(final))
+        input('Press Enter to continue... \n')
+
+        final.play_match(knockout=True)
+        print('Result: ' + str(final))
+        
+        self.winner = final.winner
+        return self.winner
