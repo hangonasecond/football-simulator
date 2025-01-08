@@ -35,6 +35,6 @@ class Tournament:
 
             next_match = matches.Match(match[0], match[1])
             print(str(next_match))
-            next_match.play_match()
+            next_match.play_match(knockout=True)
             print('Result: ' + str(next_match))
             winners.append(next_match.winner)

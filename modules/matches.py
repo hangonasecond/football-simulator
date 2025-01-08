@@ -15,7 +15,7 @@ class Match:
     # choose a random number of possible goal events
     # each event has a chance of either team scoring (or none)
     # based on the home team's relative strength
-    def play_match(self):
+    def play_match(self, knockout=False):
         self.home_score = 0
         self.away_score = 0
 
