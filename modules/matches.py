@@ -90,6 +90,7 @@ class Match:
                 if goal_events.penalty(att=self.away_team.players[i], gk=home_keeper):
                     print(f'{away_shooter.last_name} ({away_shooter.position} {away_shooter.rating}) scores a penalty!')
                     self.away_penalty += 1
+                print(f'{self.home_team.name} {self.home_penalty} - {self.away_penalty} {self.away_team.name}')
                 shot_count += 1
     
                 # declare a winner once the losing team can no longer win a best of 5
