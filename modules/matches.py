@@ -1,13 +1,17 @@
 from random import randint
+from modules import goal_events
 
 class Match:
     def __init__(self, home_team, away_team):
         self.home_team = home_team
         self.away_team = away_team
         self.played = False
+        self.penalties = False
 
     def __str__(self):
-        if self.played:
+        if self.played and self.penalties:
+            return f"{self.home_team.name} {self.home_score} ({self.home_penalty}) - ({self.away_penalty}) {self.away_score} {self.away_team.name}"
+        elif self.played:
             return f"{self.home_team.name} {self.home_score} - {self.away_score} {self.away_team.name}"
         else:
             return f"{self.home_team.name} v. {self.away_team.name}"
@@ -37,8 +41,12 @@ class Match:
             else:
                 self.away_score += 1
 
-        if self.home_score == self.away_score:
+        if self.home_score == self.away_score and knockout == False:
             self.winner = None
+        elif self.home_score == self.away_score and knockout == True:
+            print(str(self) + ' has ended in a draw at full time. Now, onto penalties!')
+            self.winner = self.penalty_shootout()
+            self.penalties = True
         elif self.home_score > self.away_score:
             self.winner = self.home_team
         else:
@@ -55,3 +63,44 @@ class Match:
         relative_rating_diff = abs_rating_diff / self.home_team.rating
 
         return relative_rating_diff
+
+
+    # called when a knockout match ends in a draw
+    # compare a sequence of attackers to the opposition goalkeeper to determine
+    # whether a goal is scored
+    # winner is either best of 5 or whoever is ahead after each shot thereafter
+    def penalty_shootout(self):
+        shot_count = 0
+        home_keeper = self.home_team.players[0]
+        away_keeper = self.away_team.players[0]
+        self.home_penalty = 0
+        self.away_penalty = 0
+
+        print(home_keeper.last_name + ' steps up in goals for ' + self.home_team.name)
+        print(away_keeper.last_name + ' steps up in goals for ' + self.away_team.name)
+
+        while True:
+            for i in range(10, -1, -1):
+                home_shooter = self.home_team.players[i]
+                away_shooter = self.away_team.players[i]
+
+                if goal_events.penalty(att=home_shooter, gk=away_keeper):
+                    print(f'{home_shooter.last_name} ({home_shooter.position} {home_shooter.rating}) scores a penalty!')
+                    self.home_penalty += 1
+                if goal_events.penalty(att=self.away_team.players[i], gk=home_keeper):
+                    print(f'{away_shooter.last_name} ({away_shooter.position} {away_shooter.rating}) scores a penalty!')
+                    self.away_penalty += 1
+                shot_count += 1
+    
+                # declare a winner once the losing team can no longer win a best of 5
+                # or when, after a shot is taken, a team has won
+                if shot_count in [3, 4]:
+                    if self.home_penalty - self.away_penalty > 5 - self.home_penalty:
+                        return self.home_team
+                    elif self.away_penalty - self.home_penalty > 5 - self.away_penalty:
+                        return self.away_team
+                elif shot_count >= 5:
+                    if self.home_penalty > self.away_penalty:
+                        return self.home_team
+                    elif self.away_penalty > self.home_penalty:
+                        return self.away_team
