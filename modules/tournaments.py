@@ -41,4 +41,10 @@ class Tournament:
             print('Result: ' + str(next_match))
             winners.append(next_match.winner)
             input('Press Enter to continue... \n')
+
+        self.quarter_winners = winners
+        return self.quarter_winners
             
+
+    def play_semis(self):
+        return True

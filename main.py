@@ -62,7 +62,17 @@ def play_tournament():
 
     tournament = tournaments.Tournament(PLAYER_TEAM)
 
-    tournament.play_quarters()
+    quarter_winners = tournament.play_quarters()
+    if PLAYER_TEAM in quarter_winners:
+        print('Congratulations! You made it to the semi-final.\n')
+    else:
+        print('You were knocked out in the quarter-final. Better luck next time.\n')
+
+    print('The following teams will progress to the semi-finals: ')
+    for team in quarter_winners:
+        print(team.name)
+
+    input('Press Enter to continue... \n')
    
 
 print('Welcome to football manager!')
